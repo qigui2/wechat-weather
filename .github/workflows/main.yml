@@ -1,0 +1,23 @@
+name: Daily Weather Push
+on:
+  schedule:
+    - cron: '0 23 * * *'  # 每天UTC时间23点（北京时间7点）
+jobs:
+  push-weather:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: pip install requests supabase
+      - name: Run script
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          QWEATHER_KEY: ${{ secrets.QWEATHER_KEY }}
+          SERVERCHAN_SENDKEY: ${{ secrets.SERVERCHAN_SENDKEY }}
+        run: python weather_push.py
