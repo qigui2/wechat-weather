@@ -2,6 +2,7 @@ name: Daily Weather Push
 on:
   schedule:
     - cron: '0 23 * * *'  # 每天UTC时间23点（北京时间7点）
+  workflow_dispatch:       # 允许手动触发（必须添加这一行！）
 jobs:
   push-weather:
     runs-on: ubuntu-latest
